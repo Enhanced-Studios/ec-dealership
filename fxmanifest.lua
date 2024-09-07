@@ -19,7 +19,7 @@ client_scripts {
 }
 
 server_scripts {
-    '@vrp/lib/utils.lua',
+    -- '@vrp/lib/utils.lua',
     '@oxmysql/lib/MySQL.lua', -- change if you dont use OX
     'server.lua'
 }
