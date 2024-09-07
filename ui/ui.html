@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Dealership by TacoTheDev // Enhanced Studios</title>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #1d1d1d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #313131;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #363636;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen relative">
+    <div id="vehicleshop" class="bg-zinc-950 w-[130vh] h-[70vh] rounded-lg relative border-4 border-zinc-800">
+        <div id="navigation-bar" class="flex items-center p-4 justify-between">
+            <h1 class="text-4xl font-bold text-white">Dealership</h1>
+            <div class="mt-2">
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('all')">All</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('customs')">Customs</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('super')">Super</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('suvs')">SUV</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('muscle')">Muscle</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('sports')">Sports</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('motorcycles')">Motorcycles</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('off-road')">Off-road</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('vans')">Vans</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('coupes')">Coupes</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('compacts')">Compacts</button>
+                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-[5px] px-4 rounded mr-2 transition-transform transform hover:scale-110" onclick="showCategory('sedans')">Sedans</button>
+            </div>
+        </div>
+        <div class="flex items-center justify-center mt-1">
+            <input type="text" id="searchInput" class="rounded-md py-[2px] px-[50.7vh] bg-zinc-900 text-center text-white border-2 border-zinc-800" placeholder="Search...">
+        </div>
+
+        <div id="cars" class="flex flex-wrap gap-4 p-4 justify-center h-[55vh] overflow-y-scroll mt-4">
+            <!-- <div class="bg-zinc-900 w-[200px] h-[200px] rounded-lg border-2 border-zinc-800 p-4 transition-transform transform hover:scale-105">
+                <img src="https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/panto.png" alt="NotFound">
+                <h1 class="text-white text-center text-2xl mt-6 font-semibold">Panto</h1>
+                <h1 class="text-purple-600 text-center text-lg font-semibold">100.000$</h1>
+            </div>
+            <div class="bg-zinc-900 w-[200px] h-[200px] rounded-lg border-2 border-zinc-800 p-4 transition-transform transform hover:scale-105">
+                <img src="https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/adder.png" alt="NotFound">
+                <h1 class="text-white text-center text-2xl mt-6 font-semibold">Adder</h1>
+                <h1 class="text-purple-600 text-center text-lg font-semibold">10.000.000$</h1>
+            </div>
+            <div class="bg-zinc-900 w-[200px] h-[200px] rounded-lg border-2 border-zinc-800 p-4 transition-transform transform hover:scale-105">
+                <img src="https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/sanchez2.png" alt="NotFound">
+                <h1 class="text-white text-center text-2xl mt-6 font-semibold">Sanchez 2</h1>
+                <h1 class="text-purple-600 text-center text-lg font-semibold">60.000$</h1>
+            </div>
+            <div class="bg-zinc-900 w-[200px] h-[200px] rounded-lg border-2 border-zinc-800 p-4 transition-transform transform hover:scale-105">
+                <img src="https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/panto.png" alt="NotFound">
+                <h1 class="text-white text-center text-2xl mt-6 font-semibold">Panto</h1>
+                <h1 class="text-purple-600 text-center text-lg font-semibold">100.000$</h1>
+            </div>
+            <div class="bg-zinc-900 w-[200px] h-[200px] rounded-lg border-2 border-zinc-800 p-4 transition-transform transform hover:scale-105">
+                <img src="https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/adder.png" alt="NotFound">
+                <h1 class="text-white text-center text-2xl mt-6 font-semibold">Adder</h1>
+                <h1 class="text-purple-600 text-center text-lg font-semibold">10.000.000$</h1>
+            </div>
+            <div class="bg-zinc-900 w-[200px] h-[200px] rounded-lg border-2 border-zinc-800 p-4 transition-transform transform hover:scale-105">
+                <img src="https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/sanchez2.png" alt="NotFound">
+                <h1 class="text-white text-center text-2xl mt-6 font-semibold">Sanchez 2</h1>
+                <h1 class="text-purple-600 text-center text-lg font-semibold">60.000$</h1>
+            </div> -->
+        </div>
+    </div>
+    <div id="InfoBox" class="bg-zinc-950 w-[38vh] h-[70vh] rounded-lg m-4 flex flex-col justify-center items-center border-4 border-zinc-800">
+        <img id="carImage" src="" alt="Car Image">
+        <h1 id="carName" class="text-white text-center text-2xl mt-6 font-semibold"></h1>
+        <h1 id="carSpeed" class="text-white text-center text-2xl mt-6 font-semibold"></h1>
+        <button id="buyButton" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded w-[30vh] transition-transform transform hover:scale-105 mt-4">Buy</button>
+    </div>
+<!--      -->
+    <script src="index.js"></script>
+</body>
+</html>
