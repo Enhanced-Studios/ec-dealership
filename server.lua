@@ -58,8 +58,8 @@ if Config.framework == "ESX" then
         end
     end
 
-    SpawnVehicle = function(source, model, plate)
-        ESX.OneSync.SpawnVehicle(model, Config.vehiclespawn.xyz, Config.vehiclespawn.w, {plate = plate}, function(vehicle)
+    SpawnVehicle = function(source, model, plate, spawnplace)
+        ESX.OneSync.SpawnVehicle(model, spawnplace.xyz, spawnplace.w, {plate = plate}, function(vehicle)
             Wait(100)
             local vehicle = NetworkGetEntityFromNetworkId(vehicle)
             Wait(300)
@@ -142,14 +142,14 @@ end
 
 
 RegisterServerEvent("ec_dealership:buy")
-AddEventHandler("ec_dealership:buy", function(vehicle)
+AddEventHandler("ec_dealership:buy", function(vehicle, spawnplace)
     local source = source
     local ply = Player(source)
     if ply then
         if Pay(ply, Config.list[vehicle].price) then
             local plate = AddVehicle(ply, vehicle)
             if plate then
-                SpawnVehicle(source, vehicle, plate)
+                SpawnVehicle(source, vehicle, plate, spawnplace)
             end
             Notify(ply, "You bought a " .. vehicle)
         else
