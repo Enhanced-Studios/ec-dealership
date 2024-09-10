@@ -12,7 +12,10 @@ files {
     'ui/index.js',
 }
 
-shared_script 'config.lua'
+shared_scripts {
+    -- '@ox_lib/init.lua', -- change if you use OX
+    'config.lua'
+}
 
 client_scripts {
     'client.lua',

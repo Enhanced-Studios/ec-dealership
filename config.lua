@@ -1,42 +1,46 @@
 Config = {
     framework = "ESX", -- vRP | ESX | Qbcore
-    dealerships = {
-        ['PDM'] = {
-            shop = vector3(-29.951641082764,-1104.6319580078,26.42234992981),
-            vehiclespawn = vector4(-26.663734, -1082.202148, 26.634399, 249.448822),
-            classes = {
-                customs = false,
-                sports = true,
-                super = true,
-                compacts = false,
-                coupes = true,
-                motorcycles = true,
-                muscle = true,
-                offroad = true,
-                suvs = true,
-                sedans = true,
-                vans = true,
-            },
-        },
-        -- ['EnhancedDealer'] = { -- Example of another dealership
-        --     shop = vector3(-18.263, -1078.98, 26.668),
-        --     vehiclespawn = vector4(-18.43, -1104.61, 26.66, 153.07),
-        --     classes = {
-        --         customs = false,
-        --         sports = false,
-        --         super = false,
-        --         compacts = false,
-        --         coupes = false,
-        --         motorcycles = true,
-        --         muscle = false,
-        --         offroad = false,
-        --         suvs = false,
-        --         sedans = false,
-        --         vans = false,
-        --     },
-        -- },
-    },
+    ox_target = false, -- Set to true if you are using OX_Target
 }
+
+Config.dealerships = {
+    ['PDM'] = {
+        shop = vector3(-29.951641082764,-1104.6319580078,26.42234992981),
+        vehiclespawn = vector4(-26.663734, -1082.202148, 26.634399, 249.448822),
+        showcasespawn = vector3(-40.07, -1100.91, 26.315),
+        classes = {
+            customs = false,
+            sports = true,
+            super = true,
+            compacts = true,
+            coupes = true,
+            motorcycles = true,
+            muscle = true,
+            offroad = true,
+            suvs = true,
+            sedans = true,
+            vans = true,
+        },
+    },
+    -- ['EnhancedDealer'] = { -- Example of another dealership
+    --     shop = vector3(-18.263, -1078.98, 26.668),
+    --     vehiclespawn = vector4(-18.43, -1104.61, 26.66, 153.07),
+    --     classes = {
+    --         customs = false,
+    --         sports = false,
+    --         super = false,
+    --         compacts = false,
+    --         coupes = false,
+    --         motorcycles = true,
+    --         muscle = false,
+    --         offroad = false,
+    --         suvs = false,
+    --         sedans = false,
+    --         vans = false,
+    --     },
+    -- },
+}
+
 Config.list = {
     -- SPORTS
     ['adder'] = {
@@ -45,6 +49,13 @@ Config.list = {
         speed = '200km/h',
         class = 'sports',
     },
+    -- ['adder'] = {
+    --     price = 1000000,
+    --     label = 'Adder',
+    --     speed = '200km/h',
+    --     class = 'sports',
+    --     img = 'https://emojiisland.com/cdn/shop/products/Hugging_Face_Emoji_2028ce8b-c213-4d45-94aa-21e1a0842b4d_grande.png?v=1571606036', -- Example of an image
+    -- },
     ['cheetah'] = {
         price = 650000,
         label = 'Cheetah',
@@ -79,12 +90,6 @@ Config.list = {
         price = 500000,
         label = 'Comet',
         speed = '190km/h',
-        class = 'sports',
-    },
-    ['adder'] = {
-        price = 1000000,
-        label = 'Adder',
-        speed = '200km/h',
         class = 'sports',
     },
     -- SUPERS

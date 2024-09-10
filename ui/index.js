@@ -25,8 +25,8 @@ function showCategory(category) {
         }
     });
 }
-
 let selectedCar = null;
+let isInshowcase = false;
 
 // Listen for FiveM Lua function call
 window.addEventListener('message', function(event) {
@@ -36,15 +36,23 @@ window.addEventListener('message', function(event) {
         $("#vehicleshop").show("slide");
         // Clear existing vehicle list
         document.getElementById('cars').innerHTML = '';
-
         // Create vehicle list for each vehicle in data.vehicles
         for (const [key, vehicle] of Object.entries(data.vehicles)) {
             if (data.class[vehicle.class]) {
                 const vehicleItem = document.createElement('div');
-                vehicleItem.classList.add('bg-zinc-900', 'w-[200px]', 'h-[200px]', 'rounded-lg', 'border-2', 'border-zinc-800', 'p-4', 'transition-transform', 'transform', 'hover:scale-105');
+                vehicleItem.classList.add('bg-zinc-900', 'w-[200px]', 'h-[200px]', 'rounded-sm', 'border-2', 'border-zinc-800', 'p-4', 'transition-transform', 'transform', 'hover:scale-105');
     
                 const vehicleImage = document.createElement('img');
-                vehicleImage.src = `https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/${key}.png`;
+                if (vehicle.img) {
+                    vehicleImage.src = vehicle.img;
+                    vehicleImage.style.maxWidth = '100%';
+                    vehicleImage.style.maxHeight = '56%';
+                    vehicleImage.style.margin = 'auto';
+                    vehicleImage.style.objectFit = 'contain';
+                }
+                else {
+                    vehicleImage.src = `https://raw.githubusercontent.com/matthias18771/v-vehicle-images/main/images/${key}.png`;
+                };
                 vehicleItem.appendChild(vehicleImage);
     
                 const vehicleName = document.createElement('h1');
@@ -64,23 +72,30 @@ window.addEventListener('message', function(event) {
                 document.getElementById('cars').appendChild(vehicleItem);
     
                 vehicleItem.addEventListener('click', function() {
-                    const buyButton = document.getElementById('buyButton');
                     const carName = vehicleItem.querySelector('h1').textContent;
-                    const carImage = vehicleItem.querySelector('img').src;
-            
-                    document.getElementById('carImage').src = carImage;
                     document.getElementById('carName').textContent = `${carName}`;
+                    document.getElementById('price').textContent = `Price: $${formattedNumberDE}`;
                     document.getElementById('carSpeed').textContent = `Speed: ${vehicle.speed}`;
-                    buyButton.textContent = `Buy ${carName}`;
             
                     // Add slide animation
                     if (selectedCar === vehicleItem) {
-                        $("#InfoBox").hide("slide");
                         selectedCar = null;
                     } else {
-                        $("#InfoBox").show("slide");
                         selectedCar = vehicleItem;
                     }
+
+                    fetch(`https://${GetParentResourceName()}/Showcase`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ vehicle: key})
+                    });
+                    $("#vehicleshop").hide("slide");
+                    setTimeout(() => {
+                        $("#InfoBox").show("slide");
+                        isInshowcase = true;
+                    }, 200); // Wait for 1 second before playing the animation
                 });
             }
           }
@@ -94,32 +109,48 @@ window.addEventListener('message', function(event) {
     }
 });
 
-const buyButton = document.getElementById('buyButton');
-buyButton.addEventListener('click', function() {
-    const vehicle = selectedCar.getAttribute('data-key');
-    // Send NUI event to client Lua
-    fetch(`https://${GetParentResourceName()}/buy`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ vehicle: vehicle})
-    });
-    $("#InfoBox").hide("slide");
-    $("#vehicleshop").hide("slide");
-    selectedCar = null;
-    // Send NUI event to client Lua
-    fetch(`https://${GetParentResourceName()}/close`);
-});
-
-
 document.addEventListener('keydown', function(event) {
     if (event.key === 'Escape') {
         $("#InfoBox").hide("slide");
         $("#vehicleshop").hide("slide");
         selectedCar = null;
         // Send NUI event to client Lua
-        fetch(`https://${GetParentResourceName()}/close`);
+        fetch(`https://${GetParentResourceName()}/Showcase`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({type: 'closefull'})
+        });
+    }
+    if (isInshowcase) {
+        if (event.key === 'Enter') {
+            const vehicle = selectedCar.getAttribute('data-key');
+            // Send NUI event to client Lua
+            fetch(`https://${GetParentResourceName()}/buy`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ vehicle: vehicle})
+            });
+            $("#InfoBox").hide("slide");
+            $("#vehicleshop").hide("slide");
+            selectedCar = null;
+            isInshowcase = false;
+        } else if (event.key === 'Backspace') {
+            $("#InfoBox").hide("slide");
+            $("#vehicleshop").show("slide");
+            selectedCar = null;
+            fetch(`https://${GetParentResourceName()}/Showcase`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({type: 'close'})
+            });
+            isInshowcase = false;
+        }
     }
 });
 
