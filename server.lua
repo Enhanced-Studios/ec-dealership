@@ -93,51 +93,6 @@ elseif Config.framework == "vRP" then
     Notify = function(user_id, message)
         vRPclient.notify({user_id, {message}})
     end
-elseif Config.framework == "Qbcore" then
-    QBCore = exports['qb-core']:GetCoreObject()
-
-    GeneratePlate = function()
-        math.randomseed(GetGameTimer())
-    
-        local generatedPlate = string.upper(GetRandomLetter(2) .. " " .. GetRandomNumber(4))
-    
-        local isTaken = MySQL.Sync.fetchScalar('SELECT plate FROM player_vehicles WHERE plate = ?', {generatedPlate})
-        if isTaken then 
-            return GeneratePlate()
-        end
-    
-        return generatedPlate
-    end
-
-    Player = function(source)
-        return QBCore.Functions.GetPlayer(source)
-    end
-
-    AddVehicle = function(user_id, vehicle)
-        MySQL.Async.execute('INSERT INTO player_vehicles (license, citizenid, vehicle, hash, mods, plate, garage, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?)', {
-            user_id.PlayerData.license,
-            user_id.PlayerData.citizenid,
-            vehicle,
-            GetHashKey(vehicle),
-            '{}',
-            GeneratePlate(),
-            'pillboxgarage',
-            0
-        })
-        return
-    end
-
-    Pay = function(user_id, amount)
-        if user_id.Functions.RemoveMoney('cash', amount, 'DealerShip') or user_id.Functions.RemoveMoney('bank', amount, 'DealerShip') then
-            return true
-        else
-            return false
-        end
-    end
-
-    Notify = function(ply, message)
-        QBCore.Functions.Notify(message)
-    end
 end
 
 

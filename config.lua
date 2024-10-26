@@ -1,5 +1,5 @@
 Config = {
-    framework = "ESX", -- vRP | ESX | Qbcore
+    framework = "ESX", -- vRP | ESX
     ox_target = false, -- Set to true if you are using OX_Target
 }
 
@@ -8,6 +8,11 @@ Config.dealerships = {
         shop = vector3(-29.951641082764,-1104.6319580078,26.42234992981),
         vehiclespawn = vector4(-26.663734, -1082.202148, 26.634399, 249.448822),
         showcasespawn = vector3(-40.07, -1100.91, 26.315),
+        blip = {
+            sprite = 225,
+            color = 2,
+            name = 'PDM',
+        }
         classes = {
             customs = false,
             sports = true,

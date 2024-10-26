@@ -45,15 +45,15 @@ local Draw3DText = function(coords, text)
     end
 end
 
-local CreateBlip = function(coords, name)
+local CreateBlip = function(coords, name, settings)
     local blip = AddBlipForCoord(coords.x, coords.y, coords.z)
-    SetBlipSprite(blip, 810)
+    SetBlipSprite(blip, settings.sprite)
     SetBlipScale(blip, 0.7)
-    SetBlipColour(blip, 7)
+    SetBlipColour(blip, settings.color)
     SetBlipAsShortRange(blip, true)
     BeginTextCommandSetBlipName("STRING")
     AddTextComponentString(name)
-    EndTextCommandSetBlipName(blip)
+    EndTextCommandSetBlipName(settings.name)
 end
 
 local isShowcaseVehicle = nil
@@ -177,6 +177,6 @@ end)
 -- LOADING BLIPS
 
 for key, value in pairs(Config.dealerships) do
-    CreateBlip(value.shop, key .. " Dealership")
+    CreateBlip(value.shop, key .. " Dealership", value.blip)
 end
 
