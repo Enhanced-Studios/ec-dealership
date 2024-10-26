@@ -12,7 +12,7 @@ Config.dealerships = {
             sprite = 225,
             color = 2,
             name = 'PDM',
-        }
+        },
         classes = {
             customs = false,
             sports = true,
